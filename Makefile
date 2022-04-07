@@ -23,6 +23,7 @@ init:
 	docker-compose up -d
 	$(bash-c) 'composer install'
 	$(bash-c) 'chmod 777 -R storage bootstrap/cache'
+	$(bash-c) 'php artisan migrate'
 	./url.sh
 create-test-db:
 	docker-compose exec db bash -c 'echo create database docker_test_db | mysql -u root -proot'
