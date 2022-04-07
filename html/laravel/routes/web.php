@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,32 +15,18 @@
 |
 */
 
-use App\Book;
-use Illuminate\Http\Request;
-
-/**
-* 本の一覧表示(books.blade.php)
-*/
 Route::get('/', function () {
     return view('welcome');
 });
 
-/**
-* 本を追加 
-*/
-Route::post('/books', function (Request $request) {
-    //
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-/**
-* 本を削除 
-*/
-Route::delete('/book/{book}', function (Book $book) {
-    //
-});
+require __DIR__.'/auth.php';
 
+Route::resource('projects', ProjectController::class)
+    ->middleware(['auth']);
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::resource('projects/{project}/tasks', TaskController::class)
+    ->middleware(['auth']);
