@@ -8,12 +8,12 @@ services:
     volumes:
       - ./html:/var/www/html
     ports:
-      - 10580:80
+      - 20980:80
   db:
     build: ./docker/db
     environment:
       MYSQL_DATABASE: c9
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       TZ: Asia/Tokyo
     volumes:
       - ./docker/db/data:/var/lib/mysql
@@ -22,9 +22,7 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=db
-      - PMA_USER=root
-      - PMA_PASSWORD=root
     ports:
-      - 10581:80
+      - 20981:80
     volumes:
       - ./docker/phpmyadmin/sessions:/sessions
